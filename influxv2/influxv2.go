@@ -32,19 +32,11 @@ func Connect(options Options) (*Client, error) {
 	}, nil
 }
 
-func (influxv2Client *Client) Send(thing Influxable) error {
-	writeAPI, err := influxv2Client.WriteAPIBlocking(influxv2Client.options.Organization, influxv2Client.options.Bucket)
+func (influxClient *Client) Send(thing Influxable) error {
+	writeAPI := influxClient.client.WriteAPIBlocking(influxClient.options.Organization, influxClient.options.Bucket)
 
-	if err != nil {
-		return err
-	}
-
-	p, err := influxdb2.NewPoint(thing.Category(), thing.Tags(), thing.Fields())
-
-	if err != nil {
-		return err
-	}
-
+	p := influxdb2.NewPoint(thing.Category(), thing.Tags(), thing.Fields())
 	writeAPI.WritePoint(p)
 	writeAPI.Flush()
+	return (*influxClient.client).Close()
 }
