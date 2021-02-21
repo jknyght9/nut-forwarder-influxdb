@@ -44,4 +44,5 @@ func (influxClient *Client) Send(thing Influxable) error{
 		return err
 	}
 	(*influxClient.client).Close()
+	return nil
 }
