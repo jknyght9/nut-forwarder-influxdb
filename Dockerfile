@@ -2,8 +2,8 @@ FROM golang:alpine as builder
 
 RUN apk add -U --no-cache git ca-certificates
 
-COPY . $GOPATH/src/github.com/AlbinoDrought/nut-forwarder-influxdb
-WORKDIR $GOPATH/src/github.com/AlbinoDrought/nut-forwarder-influxdb
+COPY . $GOPATH/src/github.com/jknyght9/nut-forwarder-influxdb
+WORKDIR $GOPATH/src/github.com/jknyght9/nut-forwarder-influxdb
 
 ENV CGO_ENABLED=0 \
   GOOS=linux \
