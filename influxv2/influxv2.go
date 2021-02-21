@@ -33,7 +33,7 @@ func Connect(options Options) (*Client, error) {
 }
 
 func (influxv2Client *Client) Send(thing Influxable) error {
-	writeAPI, err := influxv2Client.WriteAPI(influxv2Client.options.Organization, influxv2Client.options.Bucket)
+	writeAPI, err := influxv2Client.WriteAPIBlocking(influxv2Client.options.Organization, influxv2Client.options.Bucket)
 
 	if err != nil {
 		return err
