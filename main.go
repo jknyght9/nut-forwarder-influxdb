@@ -41,7 +41,7 @@ func main() {
 
 	log.Println("Connected to NUT!", version)
 
-	influxv2Client, err := influx.Connect(influxv2.Options{
+	influxv2Client, err := influxv2.Connect(influxv2.Options{
 		Bucket:			cfg.InfluxBucket,
 		Organization:	cfg.InfluxOrganization,
 		Server:			cfg.InfluxServer,
