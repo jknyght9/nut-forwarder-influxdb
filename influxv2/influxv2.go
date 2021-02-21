@@ -1,8 +1,6 @@
 package influxv2
 
 import (
-	"fmt"
-
 	"github.com/influxdata/influxdb-client-go"
 )
 
@@ -25,12 +23,8 @@ type Client struct {
 }
 
 func Connect(options Options) (*Client, error) {
-	client, err := influxdb2.NewClient(options.Server, options.Token)
+	client := influxdb2.NewClient(options.Server, options.Token)
 	defer client.Close()
-
-	if err != nil {
-		return nil, err
-	}
 
 	return &Client {
 		client: &client,
@@ -39,7 +33,7 @@ func Connect(options Options) (*Client, error) {
 }
 
 func (influxv2Client *Client) Send(thing Influxable) error {
-	writeAPI, err := (influxv2Client *Client).WriteAPI(options.Organization, options.Bucket)
+	writeAPI, err := influxv2Client.WriteAPI(influxv2Client.options.Organization, influxv2Client.options.Bucket)
 
 	if err != nil {
 		return err
