@@ -2,8 +2,8 @@ package influxv2
 
 import (
 	"fmt"
-	
-	"github.com/influxdata/influxdb-client-go/v2"
+
+	"github.com/influxdata/influxdb-client-go/v3"
 )
 
 type Options struct {
