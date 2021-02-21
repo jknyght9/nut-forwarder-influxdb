@@ -2,6 +2,7 @@ package influxv2
 
 import (
 	"fmt"
+	
 	"github.com/influxdata/influxdb-client-go/v2"
 )
 
