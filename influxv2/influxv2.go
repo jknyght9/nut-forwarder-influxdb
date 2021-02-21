@@ -1,6 +1,9 @@
 package influxv2
 
 import (
+	"context"
+	"time"
+
 	"github.com/influxdata/influxdb-client-go"
 )
 
@@ -35,8 +38,7 @@ func Connect(options Options) (*Client, error) {
 func (influxClient *Client) Send(thing Influxable) {
 	writeAPI := (*influxClient.client).WriteAPIBlocking(influxClient.options.Organization, influxClient.options.Bucket)
 
-	p := influxdb2.NewPoint(thing.Category(), thing.Tags(), thing.Fields())
-	writeAPI.WritePoint(p)
-	writeAPI.Flush()
+	p := influxdb2.NewPoint(thing.Category(), thing.Tags(), thing.Fields(), time.Now())
+	writeAPI.WritePoint(context.Background(), p)
 	(*influxClient.client).Close()
 }
