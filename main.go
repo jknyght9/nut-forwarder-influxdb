@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/jknyght/nut-forwarder-influxdb/influxv2"
+	"github.com/jknyght9/nut-forwarder-influxdb/influxv2"
 	// "github.com/AlbinoDrought/nut-forwarder-influxdb/influx"
 	"github.com/caarlos0/env"
 	nut "github.com/robbiet480/go.nut"
