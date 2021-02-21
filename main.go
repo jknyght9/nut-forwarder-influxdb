@@ -45,7 +45,7 @@ func main() {
 		Bucket:			cfg.InfluxBucket,
 		Organization:	cfg.InfluxOrganization,
 		Server:			cfg.InfluxServer,
-		Token:			cfg.InfluxToken
+		Token:			cfg.InfluxToken,
 	})
 	if err != nil {
 		log.Fatalln("error connecting to influx", err)
