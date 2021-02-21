@@ -67,10 +67,11 @@ func main() {
 			mapped := mapUPS(&ups)
 			influxable := influxableUPS(mapped)
 
-			err = influxClient.Send(influxable)
-			if err != nil {
-				log.Fatalln("error sending to influx", err)
-			}
+			influxClient.Send(influxable)
+			// err = influxClient.Send(influxable)
+			// if err != nil {
+			// 	log.Fatalln("error sending to influx", err)
+			// }
 		}
 
 		select {
