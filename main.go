@@ -51,6 +51,8 @@ func main() {
 	})
 	if err != nil {
 		log.Fatalln("error connecting to influxv2", err)
+	} else {
+		log.Println("Connected to InfluxDBv2")
 	}
 	// } else {
 	// 	influxClient, err := influx.Connect(influx.Options{
