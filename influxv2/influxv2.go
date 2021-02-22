@@ -1,7 +1,8 @@
 package influxv2
 
 import (
-	"context"
+	"fmt"
+	"log"
 	"time"
 
 	"github.com/influxdata/influxdb-client-go"
@@ -29,16 +30,29 @@ func Connect(options Options) (*Client, error) {
 	client := influxdb2.NewClient(options.Server, options.Token)
 	defer client.Close()
 
-	return &Client {
-		client: &client,
-		options: &options,
-	}, nil
+	if client != nil {
+		return &Client {
+			client: &client,
+			options: &options,
+		}, nil
+	}
+	return nil, fmt.Errorf("could not connect to %v", options.Server)
 }
 
 func (influxClient *Client) Send(thing Influxable) {
-	writeAPI := (*influxClient.client).WriteAPIBlocking(influxClient.options.Organization, influxClient.options.Bucket)
+	writeAPI := (*influxClient.client).WriteAPI(influxClient.options.Organization, influxClient.options.Bucket)
+	
+	// write errors if any
+	errorChannel := writeAPI.Errors()
+	go func() {
+		for err := range errorChannel {
+			og.Fatalln("error writing to influx", err.Error())
+		}
+	}()
 
+	// write data
 	p := influxdb2.NewPoint(thing.Category(), thing.Tags(), thing.Fields(), time.Now())
-	writeAPI.WritePoint(context.Background(), p)
+	writeAPI.WritePoint(p)
+	writeAPI.Flush()
 	(*influxClient.client).Close()
 }
