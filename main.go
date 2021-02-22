@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/jknyght9/nut-forwarder-influxdb/influx"
+	// "github.com/jknyght9/nut-forwarder-influxdb/influx"
 	"github.com/jknyght9/nut-forwarder-influxdb/influxv2"
 	"github.com/caarlos0/env"
 	nut "github.com/robbiet480/go.nut"
@@ -42,29 +42,27 @@ func main() {
 
 	log.Println("Connected to NUT!", version)
 
-	influxClient := nil
-	if cfg.InfluxVersion2 {
-		influxClient, err := influxv2.Connect(influxv2.Options{
-			Bucket:			cfg.InfluxBucket,
-			Organization:	cfg.InfluxOrganization,
-			Server:			cfg.InfluxServer,
-			Token:			cfg.InfluxToken,
-		})
-		if err != nil {
-			log.Fatalln("error connecting to influxv2", err)
-		}
-	} else {
-		influxClient, err := influx.Connect(influx.Options{
-			Server:			cfg.InfluxServer,
-			Database:		cfg.InfluxDatabase,
-			Username:		cfg.InfluxUsername,
-			Password:		cfg.InfluxPassword,
-		})
-		if err != nil {
-			log.Fatalln("error connecting to influx", err)
-		}
+	// if cfg.InfluxVersion2 {
+	influxClient, err := influxv2.Connect(influxv2.Options{
+		Bucket:			cfg.InfluxBucket,
+		Organization:	cfg.InfluxOrganization,
+		Server:			cfg.InfluxServer,
+		Token:			cfg.InfluxToken,
+	})
+	if err != nil {
+		log.Fatalln("error connecting to influxv2", err)
 	}
-
+	// } else {
+	// 	influxClient, err := influx.Connect(influx.Options{
+	// 		Server:			cfg.InfluxServer,
+	// 		Database:		cfg.InfluxDatabase,
+	// 		Username:		cfg.InfluxUsername,
+	// 		Password:		cfg.InfluxPassword,
+	// 	})
+	// 	if err != nil {
+	// 		log.Fatalln("error connecting to influx", err)
+	// 	}
+	// }
 
 	var upsList []nut.UPS
 	ticker := time.NewTicker(time.Minute)
@@ -81,7 +79,6 @@ func main() {
 		for _, ups := range upsList {
 			mapped := mapUPS(&ups)
 			influxable := influxableUPS(mapped)
-
 			influxClient.Send(influxable)
 		}
 
