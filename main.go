@@ -42,6 +42,7 @@ func main() {
 
 	log.Println("Connected to NUT!", version)
 
+	influxClient := nil
 	if cfg.InfluxVersion2 {
 		influxClient, err := influxv2.Connect(influxv2.Options{
 			Bucket:			cfg.InfluxBucket,
@@ -82,10 +83,6 @@ func main() {
 			influxable := influxableUPS(mapped)
 
 			influxClient.Send(influxable)
-			// err = influxClient.Send(influxable)
-			// if err != nil {
-			// 	log.Fatalln("error sending to influx", err)
-			// }
 		}
 
 		select {
