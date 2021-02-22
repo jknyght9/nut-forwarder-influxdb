@@ -46,7 +46,7 @@ func (influxClient *Client) Send(thing Influxable) {
 	errorChannel := writeAPI.Errors()
 	go func() {
 		for err := range errorChannel {
-			og.Fatalln("error writing to influx", err.Error())
+			log.Fatalln("error writing to influx", err.Error())
 		}
 	}()
 
