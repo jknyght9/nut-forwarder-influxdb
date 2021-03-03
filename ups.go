@@ -1,22 +1,23 @@
 package main
 
 import (
+	"log"
+
+	"github.com/caarlos0/env"
 	nut "github.com/robbiet480/go.nut"
 )
 
 const serialField = "ups.serial"
 const percentField = "ups.load"
-const wattsField = "ups.realpower.nominal"
+const wattsField = "ups.power.nominal"
 
 var valueFields = []string{
 	"battery.charge",
 	"battery.runtime",
 	"battery.voltage",
-
 	"input.voltage",
-
 	"output.voltage",
-
+	"ups.status",
 	percentField,
 	wattsField,
 }
@@ -75,5 +76,10 @@ func (device influxableUPS) Fields() map[string]interface{} {
 }
 
 func (device influxableUPS) Category() string {
-	return "ups"
+	cfg := config{}
+	if err := env.Parse(&cfg); err != nil {
+		log.Fatalln("error parsing config", err)
+	}
+	return cfg.UPSName
+	// return "ups"
 }

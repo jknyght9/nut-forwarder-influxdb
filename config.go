@@ -1,8 +1,8 @@
 package main
 
 type config struct {
-	InfluxServer   string `env:"INFLUX_SERVER" envDefault:"http://localhost:8086"`
-	
+	InfluxServer string `env:"INFLUX_SERVER" envDefault:"http://localhost:8086"`
+
 	//v1
 	// InfluxDatabase string `env:"INFLUX_DATABASE" envDefault:"ups"`
 	// InfluxUsername string `env:"INFLUX_USERNAME"`
@@ -10,9 +10,12 @@ type config struct {
 
 	//v2
 	// InfluxVersion2	bool `env:"INFLUX_VERSION2" envDefault:"true"`
-	InfluxBucket   string `env:"INFLUX_BUCKET" envDefault:"ups"`
-	InfluxOrganization   string `env:"INFLUX_ORGANIZATION"`
-	InfluxToken   string `env:"INFLUX_TOKEN"`
+	InfluxBucket       string `env:"INFLUX_BUCKET" envDefault:"ups"`
+	InfluxOrganization string `env:"INFLUX_ORGANIZATION"`
+	InfluxToken        string `env:"INFLUX_TOKEN"`
+
+	// UPS name
+	UPSName string `env:"UPS_NAME" envDefault:"office_tripplite"`
 
 	// NUT
 	NUTHost     string `env:"NUT_HOST" envDefault:"localhost"`

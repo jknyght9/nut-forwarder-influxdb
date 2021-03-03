@@ -7,9 +7,10 @@ import (
 	"time"
 
 	// "github.com/jknyght9/nut-forwarder-influxdb/influx"
-	"github.com/jknyght9/nut-forwarder-influxdb/influxv2"
+	// "github.com/jknyght9/nut-forwarder-influxdb/influxv2"
 	"github.com/caarlos0/env"
 	nut "github.com/robbiet480/go.nut"
+	"main.go/influxv2"
 )
 
 func main() {
@@ -44,10 +45,10 @@ func main() {
 
 	// if cfg.InfluxVersion2 {
 	influxClient, err := influxv2.Connect(influxv2.Options{
-		Bucket:			cfg.InfluxBucket,
-		Organization:	cfg.InfluxOrganization,
-		Server:			cfg.InfluxServer,
-		Token:			cfg.InfluxToken,
+		Bucket:       cfg.InfluxBucket,
+		Organization: cfg.InfluxOrganization,
+		Server:       cfg.InfluxServer,
+		Token:        cfg.InfluxToken,
 	})
 	if err != nil {
 		log.Fatalln("error connecting to influxv2", err)
